@@ -1,4 +1,4 @@
-FROM        centos:8
+FROM        centos:7
 RUN         yum install httpd -y
 CMD         ["httpd","-DFOREGROUND"]
 HEALTHCHECK --interval=5s --timeout=3s \
