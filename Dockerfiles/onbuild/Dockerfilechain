@@ -1,2 +1,7 @@
 FROM        onbuild
 RUN         echo 'child image'
+
+
+
+
+#docker build -t onbuildchain -f Dockerfilechain .
