@@ -1,2 +1,2 @@
-FROM        ONBUILD
+FROM        onbuild
 RUN         echo 'child image'
