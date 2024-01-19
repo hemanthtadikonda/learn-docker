@@ -1,0 +1,2 @@
+FROM        ONBUILD
+RUN         echo 'child image'
