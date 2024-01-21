@@ -1,3 +1,98 @@
+version: "3.8"
+services:
+   frontend:
+      container_name: frontend
+      image: hemanthtadikonda/frontend:1.0.0
+      ports:
+         - "80:80"
+      depends_on:
+         -  catalogue
+
+   mongodb:
+      container_name: mongodb
+      image: hemanthtadikonda/mongodb:1.0.0
+
+   catalogue:
+      container_name: catalogue
+      image: hemanthtadikonda/catalogue:1.0.0
+      environment:
+         MONGO_URL: "mongodb://mongodb:27017/catalogue"
+      depends_on:
+         -  mongodb
+
+   redis:
+      container_name: redis
+      image: redis
+
+   user:
+      container_name: user
+      image: hemanthtadikonda/user:1.0.0
+      environment:
+         MONGO_URL: "mongodb://mongodb:27017/users"
+         REDIS_HOST: redis
+      depends_on:
+         -  mongodb
+         -  redis
+
+   cart:
+      container_name: cart
+      image: hemanthtadikonda/cart:1.0.0
+      environment:
+         REDIS_HOST: redis
+         CATALOGUE_HOST: catalogue
+      depends_on:
+         -  catalogue
+         -  redis
+
+   mysql:
+      container_name: mysql
+      image: hemanthtadikonda/mysql:1.0.0
+      environment:
+         MYSQL_ROOT_PASSWORD: "root123"
+
+   shipping:
+      container_name: shipping
+      image: hemanthtadikonda/shipping:1.0.0
+      environment:
+         CART_ENDPOINT: "cart:8080"
+         DB_HOST: mysql
+      depends_on:
+         -  mysql
+
+   rabbitmq:
+      container_name: rabbitmq
+      image: rabbitmq
+
+   payment:
+      container_name: payment
+      image: hemanthtadikonda/payment:1.0.0
+      environment:
+         CART_HOST: cart
+         USER_HOST: user
+         AMPQ_HOST: rabbitmq
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #version: "2.4"
 #services:
 #   frontend:
@@ -19,26 +114,3 @@
 #      image: hemanthtadikonda/mongodb:1.0.0
 #      depends_on:
 #         - mongodb
-version: "3.8"
-services:
-   frontend:
-      container_name: frontend
-      image: hemanthtadikonda/frontend:1.0.0
-      ports:
-         - "80:80"
-      depends_on:
-         -  catalogue
-
-
-   catalogue:
-      container_name: catalogue
-      image: hemanthtadikonda/catalogue:1.0.0
-      environment:
-         MONGO_URL: "mongodb://mongodb:27017/catalogue"
-      depends_on:
-         -  mongodb
-
-   mongodb:
-      container_name: mongodb
-      image: hemanthtadikonda/mongodb:1.0.0
-
