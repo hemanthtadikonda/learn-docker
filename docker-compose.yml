@@ -26,6 +26,9 @@ services:
       image: hemanthtadikonda/frontend:1.0.0
       ports:
          - "80:80"
+      depends_on:
+         -  catalogue
+
 
    catalogue:
       container_name: catalogue
