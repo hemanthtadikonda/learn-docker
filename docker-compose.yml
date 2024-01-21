@@ -1,0 +1,21 @@
+version: "2.4"
+services:
+   frontend:
+      container_name: frontend
+      image: hemanthtadikonda/frontend:1.0.0
+      ports:
+         - 80:80
+      depends_on:
+         - catalogue
+   catalogue:
+      container_name: catalogue
+      image: hemanthtadikonda/catalogue:1.0.0
+      environment:
+         MONGO_URL: mongodb://mongodb:27017/catalogue
+      depends_on:
+         - mongodb
+   mongodb:
+      container_name: mongodb
+      image: hemanthtadikonda/mongodb:1.0.0
+      depends_on:
+         - mongodb
